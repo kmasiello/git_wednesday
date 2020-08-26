@@ -19,7 +19,7 @@ ui <- fluidPage(
 
         # Show a plot of the generated distribution
         mainPanel(
-           plotOutput("distPlot")
+           plotOutput("distPlot"), plotOutput("distPlot2")
         )
     )
 )
@@ -40,7 +40,18 @@ server <- function(input, output) {
                 
     })
     
-    
+    output$distPlot2 <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        x    <- faithful[, 2]
+        bins <- seq(min(x), max(x), length.out = input$bins + 1)
+        
+        # draw the histogram with the specified number of bins
+        hist(x, breaks = bins, col = 'goldenrod', border = 'white',
+             xlab = 'kWh', main = 'Daily')
+        
+        
+        
+    })
 }
 
 # Run the application 
